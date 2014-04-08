@@ -13,11 +13,11 @@ string title; //title name
 //data sturcture
 //put stop.txt in a dict
 
-//strip punctuation
-
 //loop through file and build data structure
+//strip punctuation
 
 //output top 5% to report.txt
 
 //print out alphabetically
 }
+
