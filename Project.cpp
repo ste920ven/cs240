@@ -114,10 +114,12 @@ int main(int argc,char *argv[]){
 	    entry = buffer.substr( dictIter, buffer.size() - dictIter );
 	    break; //kinda makes the break condition for the for-loop useless, but whatever
 	  }
+	  
+	  //Strip any punctuation
+	  strip_punc(entry);	
+	  
 	  //Check if a stopWord or not
 	  if( !(is_stopWord( entry, stopWords )) ) { 
-	    //Strip any punctuation
-	    strip_punc(entry);
 
 	    //If the entry doesn't exist in the map, create a new entry (map a new key)
 	    if( dict.find( entry ) == dict.end() ) {
