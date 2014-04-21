@@ -49,7 +49,7 @@ bool is_stopWord( const string& s, const map<string,int> &stopWords ) {
   bool is_sWord = true;
   if(stopWords.find(s)==stopWords.end())
     is_sWord=false;
-  if( is_sWord == true ) cout << "FOUND STOP WORD!!" << endl;
+  //if( is_sWord == true ) cout << "FOUND STOP WORD!!" << endl;
   return is_sWord;
 }
 
@@ -142,6 +142,27 @@ int main(int argc,char *argv[]){
   cout << "Number of stop words: " << stop << endl;
   cout << "Number of unique words: " << unique << endl;
   cout << "Number of words in total: " << total << endl;
+
+
+  //part 3 printing out all words including occurances
+  string dbWord,sWord;
+  auto stopIter=stopWords.begin();
+  auto dictIter=dict.begin();
+  
+  while (dictIter!=dict.end() && stopIter!=stopWords.end()){
+    if(stopIter==stopWords.end()){
+      cout<<dictIter->first<<" "<<dictIter->second<<endl;
+      dictIter++;
+    }
+    else if(dictIter==dict.end() && (dictIter->first).compare(stopIter->first)>0){
+      cout<<stopIter->first<<" "<<stopIter->second<<endl;
+      stopIter++;
+    }
+    else{
+      cout<<dictIter->first<<" "<<dictIter->second<<endl;
+      dictIter++;
+    }
+  }
 
   return 0;
 }
