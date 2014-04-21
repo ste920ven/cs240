@@ -131,6 +131,7 @@ int main(int argc,char *argv[]){
 	  //If it is a stopWord, increment stopWord count.
 	  else {
 	    stop++;
+	    stopWords[entry]+=1;
 	  }
 	  total++;
 	}
@@ -143,19 +144,20 @@ int main(int argc,char *argv[]){
   cout << "Number of unique words: " << unique << endl;
   cout << "Number of words in total: " << total << endl;
 
-
   //part 3 printing out all words including occurances
   string dbWord,sWord;
   auto stopIter=stopWords.begin();
   auto dictIter=dict.begin();
+  float stopCount,totalCount;
   
   while (dictIter!=dict.end() && stopIter!=stopWords.end()){
     if(stopIter==stopWords.end()){
       cout<<dictIter->first<<" "<<dictIter->second<<endl;
       dictIter++;
     }
-    else if(dictIter==dict.end() && (dictIter->first).compare(stopIter->first)>0){
-      cout<<stopIter->first<<" "<<stopIter->second<<endl;
+    else if(dictIter!=dict.end() && (dictIter->first).compare(stopIter->first)>0){
+      if(stopIter->second>0)
+	cout<<stopIter->first<<" "<<stopIter->second<<endl;
       stopIter++;
     }
     else{
@@ -164,6 +166,9 @@ int main(int argc,char *argv[]){
     }
   }
 
+  //part 2 calculate percent are stop words
+  cout<<(float(stop)/total)*100<<"% are stop words"<<endl;
+  
   return 0;
 }
 
