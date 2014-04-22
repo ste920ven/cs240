@@ -88,6 +88,7 @@ int main(int argc,char *argv[]){
   stopFile.close();
 
   // ========= Filling dictionary ============
+  // key of dictionary is "word:title"
   map<string,int> dict; //DICTIONARY
 
   // argv[0] should be the name of the file being analyzed
@@ -120,14 +121,14 @@ int main(int argc,char *argv[]){
 	  
 	  //Check if a stopWord or not
 	  if( !(is_stopWord( entry, stopWords )) ) { 
-
+	    string key=entry+":"+title;
 	    //If the entry doesn't exist in the map, create a new entry (map a new key)
-	    if( dict.find( entry ) == dict.end() ) {
-	      dict[entry] = 1;
+	    if( dict.find(key) == dict.end() ) {
+	      dict[key] = 1;
 	      unique++; //Although, I disregarded the number of unique stopWords. Idk if you want that.
 	    }
 	    else { //Else, increment the frequency count associated with that existing entry/key.
-	      dict[entry]+=1;
+	      dict[key]+=1;
 	    }
 	  }
 	  //If it is a stopWord, increment stopWord count.
@@ -150,11 +151,15 @@ int main(int argc,char *argv[]){
   string dbWord,sWord;
   auto stopIter=stopWords.begin();
   auto dictIter=dict.begin();
+  auto tmpIter=dict.begin();
+  tmpIter++;
   float stopCount,totalCount;
   
   while (dictIter!=dict.end() && stopIter!=stopWords.end()){
     if(stopIter==stopWords.end()){
-      cout<<dictIter->first<<" "<<dictIter->second<<endl;
+      /////
+      cout<<"ASDFSDFDSFDA"<<endl;
+      cout<<" "<<" "<<dictIter->second<<endl;
       dictIter++;
     }
     else if(dictIter!=dict.end() && (dictIter->first).compare(stopIter->first)>0){
@@ -163,8 +168,17 @@ int main(int argc,char *argv[]){
       stopIter++;
     }
     else{
-      cout<<dictIter->first<<" "<<dictIter->second<<endl;
+      string word=dictIter->first.substr(0,dictIter->first.find(':'));
+      int num=dictIter->second;
+      while(tmpIter!=dict.end() && word==(tmpIter)->first.substr(0,(tmpIter)->first.find(':'))){
+	num+=tmpIter->second;
+	dictIter++;
+	tmpIter++;
+      }
+      cout<<word<<" "<<num<<endl;
       dictIter++;
+      if(tmpIter!=dict.end())
+	tmpIter++;
     }
   }
 
