@@ -59,11 +59,18 @@ bool is_stopWord( const string& s, const map<string,int> &stopWords ) {
    And lowercase entire word
 */
 void strip_punc( string& s ) {
-  if( s[0] % 'A' > 25 && s[0] % 'a' > 25 ) s.erase(0,1);
-  if( s[0] % 'A' > 25 && s[0] % 'a' > 25 ) s.erase(0,1);
-  if( s[s.size() - 1] % 'A' > 25 && s[s.size() - 1] % 'a' > 25 ) s.erase(s.size()-1,1);
-  if( s[s.size() - 1] % 'A' > 25 && s[s.size() - 1] % 'a' > 25 ) s.erase(s.size()-1,1);
-  s[0]=tolower(s[0]);
+	
+	if( s[0] % 'A' < 48 ) {
+  		if( s[0] % 'A' > 25 && s[0] % 'a' > 25 ) {
+  			s.erase(0,1);
+  			if( s[0] % 'A' > 25 && s[0] % 'a' > 25 ) s.erase(0,1);
+  		}
+  		if( s[s.size() - 1] % 'A' > 25 && s[s.size() - 1] % 'a' > 25 ) {
+  			s.erase(s.size()-1,1);
+  			if( s[s.size() - 1] % 'A' > 25 && s[s.size() - 1] % 'a' > 25 ) s.erase(s.size()-1,1);
+  		}
+  	s[0]=tolower(s[0]);
+	}
 }
 
 // =========== main =============
