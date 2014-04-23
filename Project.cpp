@@ -281,6 +281,29 @@ for(auto iter=dict.begin();iter!=dict.end();iter++){
     freqDB[0]=tmp;
     heapify(freqDB,i);
   }
+  
+   int k=unique-num;
+  for(i=freqDB[unique-num].first;i<=freqDB[unique-1].first&&i!=0;){
+    int size=0;
+    while(freqDB[k].first==i){
+      size++;
+      k++;
+    }
+    //cout<<size<<" "<<k<<endl;
+    cout<<"====="<<endl;
+    for(int n=0;n<size;n++){
+      cout<<freqDB[k-size+n].first<<endl;
+      int max=n;
+      for(int j=n+1;j<size;j++){
+	if(freqDB[k-size+j].second>freqDB[k-size+max].second)
+	  max=j;
+      }
+      swap(freqDB[k-size+n],freqDB[k-size+max]);
+    }
+    if(size==1)
+      k++;
+    i=freqDB[k].first;
+  }
 
 //Don't need these
   /*cout<<"unique: "<<unique<<endl;
