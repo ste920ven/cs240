@@ -15,36 +15,36 @@
 //     `.|         `.
 //       `-._	      .
 /*           '.  ,-.   .
- .__          _`. ..` 	.
-  ,  ''- . _,-'.,-'  ``: .
-  '-...._ (( (('-.._    . .
-         `--..      `'-. . .
-              `..     '   . .
-                 `         `"
+	     .__          _`. ..` 	.
+	     ,  ''- . _,-'.,-'  ``: .
+	     '-...._ (( (('-.._    . .
+	     `--..      `'-. . .
+	     `..     '   . .
+	     `         `"
                     
 
-   ======= INSPIRATION BIRD ========
+	     ======= INSPIRATION BIRD ========
 
 
-   ======= PROJECT =================
+	     ======= PROJECT =================
 
-   Three objectives:
-   -Retrieve most frequently used words from a data set (not including stop words defined in "stop.txt"). 
-   This means take a frequency count for each word in a data set and report the top 5% in a file "report.txt".
+	     Three objectives:
+	     -Retrieve most frequently used words from a data set (not including stop words defined in "stop.txt"). 
+	     This means take a frequency count for each word in a data set and report the top 5% in a file "report.txt".
 
-   -Compute the percentage of stop words.
+	     -Compute the percentage of stop words.
 
-   -Print out all the words within each data set (using dictionary ordering). Provide number of occurrences 
-   within a data set (including stop words). 
+	     -Print out all the words within each data set (using dictionary ordering). Provide number of occurrences 
+	     within a data set (including stop words). 
 
-   ======= PROJECT =================
+	     ======= PROJECT =================
 */   
 using namespace std;
 
 /*
   ===== is_stopWord =====
   Checks if string s is a member of the stopWords list.
- */
+*/
 bool is_stopWord( const string& s, const map<string,int> &stopWords ) {
   bool is_sWord = true;
   if(stopWords.find(s)==stopWords.end())
@@ -59,18 +59,16 @@ bool is_stopWord( const string& s, const map<string,int> &stopWords ) {
    And lowercase entire word
 */
 void strip_punc( string& s ) {
-	
-	if( s[0] % 'A' < 48 ) {
-  		if( s[0] % 'A' > 25 && s[0] % 'a' > 25 ) {
-  			s.erase(0,1);
-  			if( s[0] % 'A' > 25 && s[0] % 'a' > 25 ) s.erase(0,1);
-  		}
-  		if( s[s.size() - 1] % 'A' > 25 && s[s.size() - 1] % 'a' > 25 ) {
-  			s.erase(s.size()-1,1);
-  			if( s[s.size() - 1] % 'A' > 25 && s[s.size() - 1] % 'a' > 25 ) s.erase(s.size()-1,1);
-  		}
-  	s[0]=tolower(s[0]);
-	}
+  if( s[0] % 'A' < 48 ) {
+    if( s[0] % 'A' > 25 && s[0] % 'a' > 25 ) {
+      s.erase(0,1);
+      if( s[0] % 'A' > 25 && s[0] % 'a' > 25 ) s.erase(0,1);
+    }
+    if( s[s.size() - 1] % 'A' > 25 && s[s.size() - 1] % 'a' > 25 ) {
+      s.erase(s.size()-1,1);
+      if( s[s.size() - 1] % 'A' > 25 && s[s.size() - 1] % 'a' > 25 ) s.erase(s.size()-1,1);
+    }
+  }
 }
 
 // =========== main =============
@@ -150,14 +148,24 @@ int main(int argc,char *argv[]){
   }
   dictFile.close();
 
-//Opening report.txt
-ofstream outputFile;
-outputFile.open( "report.txt" );
+  //Opening report.txt
+  ofstream outputFile;
+  outputFile.open( "report.txt" );
 
-//INSERT TOP 5% WORDS REPORTING HERE
+  //INSERT TOP 5% WORDS REPORTING HERE
+  pair<int,string>* freqDB=new pair<int,string>[unique];
+  //insert into array
+  int i=0;
+  for(auto iter=dict.begin();iter!=dict.end();iter++,i++){
+    freqDB[i]=make_pair(iter->second,iter->first);
+  }
+  //heapsort
+  
+  delete[] freqDB;
 
-//Closing file
-outputFile.close();
+
+  //Closing file
+  outputFile.close();
   //part 3 printing out all words including occurances
   string dbWord,sWord;
   auto stopIter=stopWords.begin();
@@ -168,9 +176,16 @@ outputFile.close();
   
   while (dictIter!=dict.end() && stopIter!=stopWords.end()){
     if(stopIter==stopWords.end()){
-      /////
-      cout<<"ASDFSDFDSFDA"<<endl;
-      cout<<" "<<" "<<dictIter->second<<endl;
+      string word=dictIter->first.substr(0,dictIter->first.find(':'));
+      int num=dictIter->second;
+      while(tmpIter!=dict.end() && word==(tmpIter)->first.substr(0,(tmpIter)->first.find(':'))){
+	num+=tmpIter->second;
+	dictIter++;
+	tmpIter++;
+      }
+      cout<<word<<" "<<num<<endl;
+      dictIter++;
+      
       dictIter++;
     }
     else if(dictIter!=dict.end() && (dictIter->first).compare(stopIter->first)>0){
