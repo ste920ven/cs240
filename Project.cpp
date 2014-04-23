@@ -150,10 +150,14 @@ int main(int argc,char *argv[]){
   }
   dictFile.close();
 
-  cout << "Number of stop words: " << stop << endl;
-  cout << "Number of unique words: " << unique << endl;
-  cout << "Number of words in total: " << total << endl;
+//Opening report.txt
+ofstream outputFile;
+outputFile.open( "report.txt" );
 
+//INSERT TOP 5% WORDS REPORTING HERE
+
+//Closing file
+outputFile.close();
   //part 3 printing out all words including occurances
   string dbWord,sWord;
   auto stopIter=stopWords.begin();
