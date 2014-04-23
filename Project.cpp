@@ -183,14 +183,13 @@ int main(int argc,char *argv[]){
   ofstream outputFile;
   outputFile.open( "report.txt" );
 
-  //Closing file
-  outputFile.close();
   //part 3 printing out all words including occurances
   auto stopIter=stopWords.begin();
   auto dictIter=dict.begin();
   auto tmpIter=dict.begin();
   tmpIter++;
-  /*
+  
+  
     while (dictIter!=dict.end() && stopIter!=stopWords.end()){
     if(stopIter==stopWords.end()){
     string word=dictIter->first.substr(0,dictIter->first.find(':'));
@@ -222,9 +221,9 @@ int main(int argc,char *argv[]){
     dictIter++;
     if(tmpIter!=dict.end())
     tmpIter++;
+	  }
     }
-    }
-  //*/
+  
 
  //INSERT TOP 5% WORDS REPORTING HERE
   //combine same words with diff titles
@@ -283,20 +282,24 @@ for(auto iter=dict.begin();iter!=dict.end();iter++){
     heapify(freqDB,i);
   }
 
-  cout<<"unique: "<<unique<<endl;
+//Don't need these
+  /*cout<<"unique: "<<unique<<endl;
   cout<<"stop: "<<stop<<endl;
-  cout<<"total: "<<total<<endl;
+  cout<<"total: "<<total<<endl;*/
 
   for(i=unique-1;i>=unique-num;i--){
     //put this in report.txt
     string word=freqDB[i].second.substr(0,freqDB[i].second.find('%'));
     string ti=freqDB[i].second.substr(freqDB[i].second.find('%')+1);
-    cout<<word<<", "<<freqDB[i].first<<", "<<ti<<endl;
+    outputFile<<word<<", "<<freqDB[i].first<<", "<<ti<<endl;
   }
   delete[] freqDB;
 
   //part 2 calculate percent are stop words
-  cout<<(float(stop)/total)*100<<"% are stop words"<<endl;
+  outputFile<<(float(stop)/total)*100<<"% are stop words"<<endl;
+  
+  //Closing file
+  outputFile.close();
   
   delete[] titleArr;
   return 0;
